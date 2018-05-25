@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,155 +11,183 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/cropper.css" rel="stylesheet">
     <link href="css/docs.css" rel="stylesheet">
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-    <script >
-        const {ipcRenderer} = require('electron')
-        console.log(ipcRenderer.sendSync('synchronous-message', 'ping')) // prints "pong"
+</head>
+<body>
+<h1>Hello World!</h1>
+<!-- All of the Node.js APIs are available in this renderer process. -->
+We are using Node.js
+<script>document.write(process.versions.node)</script>
+,
+Chromium
+<script>document.write(process.versions.chrome)</script>
+,
+and Electron
+<script>document.write(process.versions.electron)</script>
+.
+<script>
+    //在渲染器进程 (网页) 中。
+    const {ipcRenderer} = require('electron')
 
-        ipcRenderer.on('asynchronous-reply', (event, arg) => {
-            console.log(arg) // prints "pong"
+    // console.log(ipcRenderer.sendSync('async', 'ping')) // prints "pong"
+    function toggleMaximize() {
+        ipcRenderer.send("openDevTools") // prints "pong"
+    }
+
+    //
+    // ipcRenderer.on('asynchronous-reply', (event, arg) => {
+    //     console.log(arg) // prints "pong"
+    // })
+    // ipcRenderer.send('asynchronous-message', 'ping')
+
+</script>
+<button onclick="toggleMaximize()">开启开发者工具</button>
+<input type="file"/>
+<script>
+    const {remote} = require('electron')
+    function choiceDir(){
+        // remote.dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']})
+        var fs = remote.require("fs")
+        fs.readFile("B:\\desktop\\todo.txt", 'utf8',function (error,data) {
+            console.log(data)
         })
-        ipcRenderer.send('asynchronous-message', 'ping')
-    </script>
-    <a href="javascript:sendSync('toggle-screen')" >toggle-screen</a>
+    }
+</script>
+<button onclick="choiceDir()">选择文件夹</button>
 
-    <div class="container-fluid eg-container" id="basic-example">
-      <div class="row eg-main">
+<div class="container-fluid eg-container" id="basic-example">
+    <div class="row eg-main">
         <div class="col-xs-12 col-sm-9">
-          <div class="eg-wrapper">
-            <img class="cropper" src="img/picture-1.jpg" alt="Picture">
-          </div>
+            <div class="eg-wrapper">
+                <img class="cropper" src="img/picture-1.jpg" alt="Picture">
+            </div>
         </div>
         <div class="col-xs-12 col-sm-3">
-          <div class="eg-preview clearfix">
-            <div class="preview preview-lg"></div>
-            <div class="preview preview-md"></div>
-            <div class="preview preview-sm"></div>
-            <div class="preview preview-xs"></div>
-          </div>
-          <div class="eg-data">
-            <div class="input-group">
-              <span class="input-group-addon">X</span>
-              <input class="form-control" id="dataX" type="text" placeholder="x">
-              <span class="input-group-addon">px</span>
+            <div class="eg-preview clearfix">
+                <div class="preview preview-lg"></div>
+                <div class="preview preview-md"></div>
+                <div class="preview preview-sm"></div>
+                <div class="preview preview-xs"></div>
             </div>
-            <div class="input-group">
-              <span class="input-group-addon">Y</span>
-              <input class="form-control" id="dataY" type="text" placeholder="y">
-              <span class="input-group-addon">px</span>
+            <div class="eg-data">
+                <div class="input-group">
+                    <span class="input-group-addon">X</span>
+                    <input class="form-control" id="dataX" type="text" placeholder="x">
+                    <span class="input-group-addon">px</span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Y</span>
+                    <input class="form-control" id="dataY" type="text" placeholder="y">
+                    <span class="input-group-addon">px</span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Width</span>
+                    <input class="form-control" id="dataWidth" type="text" placeholder="width">
+                    <span class="input-group-addon">px</span>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon">Height</span>
+                    <input class="form-control" id="dataHeight" type="text" placeholder="height">
+                    <span class="input-group-addon">px</span>
+                </div>
+                <!-- <div class="input-group">
+                  <span class="input-group-addon">Rotate</span>
+                  <input class="form-control" id="dataRotate" type="text" placeholder="rotate">
+                  <span class="input-group-addon">deg</span>
+                </div> -->
             </div>
-            <div class="input-group">
-              <span class="input-group-addon">Width</span>
-              <input class="form-control" id="dataWidth" type="text" placeholder="width">
-              <span class="input-group-addon">px</span>
-            </div>
-            <div class="input-group">
-              <span class="input-group-addon">Height</span>
-              <input class="form-control" id="dataHeight" type="text" placeholder="height">
-              <span class="input-group-addon">px</span>
-            </div>
-            <!-- <div class="input-group">
-              <span class="input-group-addon">Rotate</span>
-              <input class="form-control" id="dataRotate" type="text" placeholder="rotate">
-              <span class="input-group-addon">deg</span>
-            </div> -->
-          </div>
         </div>
-      </div>
-      <div class="clearfix">
+    </div>
+    <div class="clearfix">
         <div class="eg-button">
-          <button class="btn btn-warning" id="reset" type="button">Reset</button>
-          <button class="btn  btn-warning" id="reset2" type="button">Reset (deep)</button>
-          <button class="btn btn-primary" id="clear" type="button">Clear</button>
-          <button class="btn btn-danger" id="destroy" type="button">Destroy</button>
-          <button class="btn btn-success" id="enable" type="button">Enable</button>
-          <button class="btn btn-warning" id="disable" type="button">Disable</button>
-          <button class="btn btn-info" id="zoomIn" type="button">Zoom In</button>
-          <button class="btn btn-info" id="zoomOut" type="button">Zoom Out</button>
-          <button class="btn btn-info" id="rotateLeft" type="button">Rotate Left</button>
-          <button class="btn btn-info" id="rotateRight" type="button">Rotate Right</button>
-          <button class="btn btn-primary" id="setData" type="button">Set Data</button>
+            <button class="btn btn-warning" id="reset" type="button">Reset</button>
+            <button class="btn  btn-warning" id="reset2" type="button">Reset (deep)</button>
+            <button class="btn btn-primary" id="clear" type="button">Clear</button>
+            <button class="btn btn-danger" id="destroy" type="button">Destroy</button>
+            <button class="btn btn-success" id="enable" type="button">Enable</button>
+            <button class="btn btn-warning" id="disable" type="button">Disable</button>
+            <button class="btn btn-info" id="zoomIn" type="button">Zoom In</button>
+            <button class="btn btn-info" id="zoomOut" type="button">Zoom Out</button>
+            <button class="btn btn-info" id="rotateLeft" type="button">Rotate Left</button>
+            <button class="btn btn-info" id="rotateRight" type="button">Rotate Right</button>
+            <button class="btn btn-primary" id="setData" type="button">Set Data</button>
         </div>
         <div class="row eg-input">
-          <div class="col-md-6">
-            <div class="input-group">
+            <div class="col-md-6">
+                <div class="input-group">
             <span class="input-group-btn">
               <button class="btn btn-info" id="getData" type="button">Get Data</button>
             </span>
-              <input class="form-control" id="showData" type="text">
-              <span class="input-group-btn">
+                    <input class="form-control" id="showData" type="text">
+                    <span class="input-group-btn">
               <button class="btn btn-info" id="getData2" type="button">Get Data (Rounded)</button>
             </span>
-            </div>
-            <div class="input-group">
+                </div>
+                <div class="input-group">
             <span class="input-group-btn">
               <button class="btn btn-info" id="getImageData" type="button">Get Image Data</button>
             </span>
-              <input class="form-control" id="showImageData" type="text">
+                    <input class="form-control" id="showImageData" type="text">
+                </div>
             </div>
-          </div>
-          <div class="col-md-3">
-            <div class="input-group">
+            <div class="col-md-3">
+                <div class="input-group">
             <span class="input-group-btn">
               <button class="btn btn-primary" id="replace" type="button">Replace</button>
             </span>
-              <input class="form-control" id="replaceWith" type="text" value="img/picture-2.jpg">
-            </div>
-            <div class="input-group">
+                    <input class="form-control" id="replaceWith" type="text" value="img/picture-2.jpg">
+                </div>
+                <div class="input-group">
             <span class="input-group-btn">
               <button class="btn btn-primary" id="setAspectRatio" type="button">Set Aspect Ratio</button>
             </span>
-              <input class="form-control" id="aspectRatio" type="text" value="auto">
+                    <input class="form-control" id="aspectRatio" type="text" value="auto">
+                </div>
             </div>
-          </div>
-          <div class="col-md-3">
-            <div class="input-group">
+            <div class="col-md-3">
+                <div class="input-group">
             <span class="input-group-btn">
               <button class="btn btn-primary" id="zoom" type="button">Zoom</button>
             </span>
-              <input class="form-control" id="zoomWith" type="number" value="0.5">
-            </div>
-            <div class="input-group">
+                    <input class="form-control" id="zoomWith" type="number" value="0.5">
+                </div>
+                <div class="input-group">
             <span class="input-group-btn">
               <button class="btn btn-primary" id="rotate" type="button">Rotate</button>
             </span>
-              <input class="form-control" id="rotateWith" type="number" value="45">
+                    <input class="form-control" id="rotateWith" type="number" value="45">
+                </div>
             </div>
-          </div>
         </div>
 
         <div class="row eg-output">
-          <div class="col-md-12">
-            <button class="btn btn-primary" id="getDataURL" type="button">Get Data URL</button>
-            <button class="btn btn-primary" id="getDataURL2" type="button">Get Data URL (JPG)</button>
-            <button class="btn btn-primary" id="getDataURL3" type="button">Get Data URL (160*90)</button>
-          </div>
-          <div class="col-md-6">
-            <textarea class="form-control" id="dataURL" rows="10"></textarea>
-          </div>
-          <div class="col-md-6">
-            <div id="showDataURL"></div>
-          </div>
+            <div class="col-md-12">
+                <button class="btn btn-primary" id="getDataURL" type="button">Get Data URL</button>
+                <button class="btn btn-primary" id="getDataURL2" type="button">Get Data URL (JPG)</button>
+                <button class="btn btn-primary" id="getDataURL3" type="button">Get Data URL (160*90)</button>
+            </div>
+            <div class="col-md-6">
+                <textarea class="form-control" id="dataURL" rows="10"></textarea>
+            </div>
+            <div class="col-md-6">
+                <div id="showDataURL"></div>
+            </div>
         </div>
-      </div>
     </div>
+</div>
 
-    <script src="js/jquery.min.js"></script>
-    <script>if (typeof module === 'object') {window.jQuery = window.$ = module.exports;};</script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/cropper.js"></script>
-    <script src="js/docs.js"></script>
+<script src="js/jquery.min.js"></script>
+<script>if (typeof module === 'object') {
+    window.jQuery = window.$ = module.exports;
+}
+;</script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/cropper.js"></script>
+<script src="js/docs.js"></script>
 
 
-    <script>
-        // You can also require other files to run in this process
-        require('./renderer.js')
-    </script>
-  </body>
+<script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+</script>
+</body>
 </html>

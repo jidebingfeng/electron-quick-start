@@ -4,7 +4,8 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron --inspect-brk=9229 ."
+    "start": "electron .",
+    "debug": "electron --inspect-brk=9229 ."
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
