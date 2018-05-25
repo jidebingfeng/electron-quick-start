@@ -13,7 +13,10 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 800, height: 600,frame: false,fullscreen:true,fullscreenWindowTitle:true})
+    mainWindow.webContents.openDevTools()
+  console.log("createWindow")
+
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -33,6 +36,18 @@ function createWindow () {
     mainWindow = null
   })
 }
+
+// 在主进程中.
+const {ipcMain} = require('electron')
+ipcMain.on('asynchronous-message', (event, arg) => {
+    console.log(arg) // prints "ping"
+event.sender.send('asynchronous-reply', 'pong')
+})
+
+ipcMain.on('synchronous-message', (event, arg) => {
+    console.log(arg) // prints "ping"
+event.returnValue = 'pong'
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
