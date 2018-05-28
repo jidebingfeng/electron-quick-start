@@ -1838,7 +1838,7 @@
     },
     dblclick: function dblclick(e) {
 
-        this.zoomTo(0.5, e);
+        this.zoomTo(0.5, null,e);
     },
     wheel: function wheel(e) {
       var _this = this;

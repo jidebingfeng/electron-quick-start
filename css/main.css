@@ -1,3 +1,7 @@
+body{
+  overflow: hidden;
+}
+
 .btn {
   padding-left: .75rem;
   padding-right: .75rem;
@@ -108,7 +112,7 @@ label.btn {
 
 .img-container {
   margin-bottom: 1rem;
-  max-height: 497px;
+  /*max-height: 497px;*/
   min-height: 200px;
 }
 
