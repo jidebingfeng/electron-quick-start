@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "auto-reload": "electron . --auto-reload",
     "debug": "electron --inspect-brk=9229 ."
   },
   "repository": "https://github.com/electron/electron-quick-start",
@@ -19,5 +20,8 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^2.0.0"
+  },
+  "dependencies": {
+    "electron-reload": "^1.2.2"
   }
 }

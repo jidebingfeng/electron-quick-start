@@ -1,3 +1,8 @@
+if(/--auto-reload/.test(process.argv[2])){
+    console.log("Auto Reload!")
+    require('electron-reload')(__dirname);
+}
+
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
