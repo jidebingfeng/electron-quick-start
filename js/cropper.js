@@ -1836,12 +1836,9 @@
         }
       }
     },
-    dblclick: function dblclick() {
-      if (this.disabled || this.options.dragMode === DRAG_MODE_NONE) {
-        return;
-      }
+    dblclick: function dblclick(e) {
 
-      this.setDragMode(hasClass(this.dragBox, CLASS_CROP) ? DRAG_MODE_MOVE : DRAG_MODE_CROP);
+        this.zoomTo(0.5, e);
     },
     wheel: function wheel(e) {
       var _this = this;
