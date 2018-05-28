@@ -1838,7 +1838,13 @@
     },
     dblclick: function dblclick(e) {
 
-        this.zoomTo(0.5, null,e);
+
+        var canvasData = this.getCanvasData();
+        if(canvasData.width == canvasData.naturalWidth*0.5){
+          this.reset();
+        }else{
+            this.zoomTo(0.5, null,e);
+        }
     },
     wheel: function wheel(e) {
       var _this = this;
