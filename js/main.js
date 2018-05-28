@@ -14,17 +14,11 @@ $(function () {
   var $dataScaleX = $('#dataScaleX');
   var $dataScaleY = $('#dataScaleY');
   var options = {
-        aspectRatio: 16 / 9,
         preview: '.img-preview',
-        crop: function (e) {
-          $dataX.val(Math.round(e.detail.x));
-          $dataY.val(Math.round(e.detail.y));
-          $dataHeight.val(Math.round(e.detail.height));
-          $dataWidth.val(Math.round(e.detail.width));
-          $dataRotate.val(e.detail.rotate);
-          $dataScaleX.val(e.detail.scaleX);
-          $dataScaleY.val(e.detail.scaleY);
-        }
+      viewMode:0,
+      autoCrop:false,
+      dragMode:'move',
+      modal:false
       };
   var originalImageURL = $image.attr('src');
   var uploadedImageName = 'cropped.jpg';
@@ -71,9 +65,9 @@ $(function () {
 
 
   // Download
-  if (typeof $download[0].download === 'undefined') {
-    $download.addClass('disabled');
-  }
+  // if (typeof $download[0].download === 'undefined') {
+  //   $download.addClass('disabled');
+  // }
 
 
   // Options
@@ -105,105 +99,6 @@ $(function () {
   });
 
 
-  // Methods
-  $('.docs-buttons').on('click', '[data-method]', function () {
-    var $this = $(this);
-    var data = $this.data();
-    var cropper = $image.data('cropper');
-    var cropped;
-    var $target;
-    var result;
-
-    if ($this.prop('disabled') || $this.hasClass('disabled')) {
-      return;
-    }
-
-    if (cropper && data.method) {
-      data = $.extend({}, data); // Clone a new one
-
-      if (typeof data.target !== 'undefined') {
-        $target = $(data.target);
-
-        if (typeof data.option === 'undefined') {
-          try {
-            data.option = JSON.parse($target.val());
-          } catch (e) {
-            console.log(e.message);
-          }
-        }
-      }
-
-      cropped = cropper.cropped;
-
-      switch (data.method) {
-        case 'rotate':
-          if (cropped && options.viewMode > 0) {
-            $image.cropper('clear');
-          }
-
-          break;
-
-        case 'getCroppedCanvas':
-          if (uploadedImageType === 'image/jpeg') {
-            if (!data.option) {
-              data.option = {};
-            }
-
-            data.option.fillColor = '#fff';
-          }
-
-          break;
-      }
-
-      result = $image.cropper(data.method, data.option, data.secondOption);
-
-      switch (data.method) {
-        case 'rotate':
-          if (cropped && options.viewMode > 0) {
-            $image.cropper('crop');
-          }
-
-          break;
-
-        case 'scaleX':
-        case 'scaleY':
-          $(this).data('option', -data.option);
-          break;
-
-        case 'getCroppedCanvas':
-          if (result) {
-            // Bootstrap's Modal
-            $('#getCroppedCanvasModal').modal().find('.modal-body').html(result);
-
-            if (!$download.hasClass('disabled')) {
-              download.download = uploadedImageName;
-              $download.attr('href', result.toDataURL(uploadedImageType));
-            }
-          }
-
-          break;
-
-        case 'destroy':
-          if (uploadedImageURL) {
-            URL.revokeObjectURL(uploadedImageURL);
-            uploadedImageURL = '';
-            $image.attr('src', originalImageURL);
-          }
-
-          break;
-      }
-
-      if ($.isPlainObject(result) && $target) {
-        try {
-          $target.val(JSON.stringify(result));
-        } catch (e) {
-          console.log(e.message);
-        }
-      }
-
-    }
-  });
-
 
   // Keyboard
   $(document.body).on('keydown', function (e) {
@@ -211,7 +106,7 @@ $(function () {
     if (!$image.data('cropper') || this.scrollTop > 300) {
       return;
     }
-
+    console.log("keydown"+ e.which)
     switch (e.which) {
       case 37:
         e.preventDefault();
