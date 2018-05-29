@@ -59,7 +59,23 @@
                     &nbsp;&nbsp;
                     <button type="button" class="btn btn-primary" onclick="javascript:$('#image').cropper('clear');"> 清除</button>
                     &nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" onclick="">保存缺陷</button>
+                    <button type="button" class="btn btn-primary" id="save">保存缺陷</button>
+                </div>
+
+
+                <div class="input-group input-group-sm">
+
+                    <button type="button" class="btn btn-primary" id="before">上一张</button>
+                    &nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" id="next"> 下一张</button>
+                </div>
+
+
+                <div class="input-group input-group-sm">
+
+                    <ul id="list">
+                        <li><b>缺陷列表：</b></li>
+                    </ul>
                 </div>
 
 
@@ -78,6 +94,7 @@
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/cropper.js"></script>
 <script src="js/jquery-cropper.js"></script>
+<script src="js/local.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

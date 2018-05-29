@@ -1841,7 +1841,7 @@
 
         var canvasData = this.getCanvasData();
         if(canvasData.width == canvasData.naturalWidth*0.5){
-          this.reset();
+            this.resetZoom();
         }else{
             this.zoomTo(0.5, null,e);
         }
@@ -2451,21 +2451,37 @@
     },
 
 
-    // Reset the image and crop box to their initial states
-    reset: function reset() {
-      if (this.ready && !this.disabled) {
-        this.imageData = assign({}, this.initialImageData);
-        this.canvasData = assign({}, this.initialCanvasData);
-        this.cropBoxData = assign({}, this.initialCropBoxData);
-        this.renderCanvas();
+      // Reset the image and crop box to their initial states
+      reset: function reset() {
+          if (this.ready && !this.disabled) {
+              this.imageData = assign({}, this.initialImageData);
+              this.canvasData = assign({}, this.initialCanvasData);
+              this.cropBoxData = assign({}, this.initialCropBoxData);
+              this.renderCanvas();
 
-        if (this.cropped) {
-          this.renderCropBox();
-        }
-      }
+              if (this.cropped) {
+                  this.renderCropBox();
+              }
+          }
 
-      return this;
-    },
+          return this;
+      },
+
+
+      // Reset the image zoom to their initial states
+      resetZoom: function resetZoom() {
+          if (this.ready && !this.disabled) {
+              this.imageData = assign({}, this.initialImageData);
+              this.canvasData = assign({}, this.initialCanvasData);
+              this.renderCanvas();
+
+              if (this.cropped) {
+                  this.renderCropBox();
+              }
+          }
+
+          return this;
+      },
 
 
     // Clear the crop box

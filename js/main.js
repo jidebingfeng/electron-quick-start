@@ -55,6 +55,31 @@ $(function () {
     })
 
 
+    $("#save").on("click",function (e) {
+        if(!$image.cropper('getCropBoxData').width){
+            alert("请选择缺陷位置")
+            return;
+        }
+
+        if(!$("#defect").val()){
+            alert("请输入缺陷描述")
+            return ;
+        }
+
+        $("#list").append("<li>"+$("#line").val()+$("#tower").val()+$("#defect").val()+"</li>");
+        $image.cropper('clear');
+        $("#defect").val("")
+    })
+
+    $("#before").on("click",function (e) {
+        $image.cropper('destroy').attr('src', "img/bug1.jpg").cropper(options);
+    })
+    $("#next").on("click",function (e) {
+        var imgurl = "D:\\拷贝的缺陷数据\\无人机巡视照片\\缺陷统计\\220kV\\州肖线\\9%23A相(1)挂线金具缺少开口销螺栓松动 - 副本.jpg";
+        $image.cropper('destroy').attr('src', imgurl).cropper(options);
+    })
+
+
     // Cropper
     $image.on({
         ready: function (e) {
@@ -79,41 +104,6 @@ $(function () {
     }).cropper(options);
 
 
-
-
-    // Download
-    // if (typeof $download[0].download === 'undefined') {
-    //   $download.addClass('disabled');
-    // }
-
-
-    // Options
-    $('.docs-toggles').on('change', 'input', function () {
-        var $this = $(this);
-        var name = $this.attr('name');
-        var type = $this.prop('type');
-        var cropBoxData;
-        var canvasData;
-
-        if (!$image.data('cropper')) {
-            return;
-        }
-
-        if (type === 'checkbox') {
-            options[name] = $this.prop('checked');
-            cropBoxData = $image.cropper('getCropBoxData');
-            canvasData = $image.cropper('getCanvasData');
-
-            options.ready = function () {
-                $image.cropper('setCropBoxData', cropBoxData);
-                $image.cropper('setCanvasData', canvasData);
-            };
-        } else if (type === 'radio') {
-            options[name] = $this.val();
-        }
-
-        $image.cropper('destroy').cropper(options);
-    });
 
 
     $(document.body).on("keyup", function (e) {
@@ -173,6 +163,5 @@ $(function () {
         }
     });
 
-    // $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
 
 });
