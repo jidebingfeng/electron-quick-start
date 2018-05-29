@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,13 +27,46 @@
             <div class="docs-preview clearfix">
                 <div class="img-preview preview-lg"></div>
             </div>
+
+
+            <div class="docs-data">
+
+                <div class="input-group input-group-sm">
+                <span class="input-group-prepend">
+                  <label class="input-group-text" for="line">线路名称</label>
+                </span>
+                    <input type="text" class="form-control" id="line" placeholder="请输入线路名称" value="兰磨线">
+                </div>
+
+                <div class="input-group input-group-sm">
+                <span class="input-group-prepend">
+                  <label class="input-group-text" for="tower">杆塔名称</label>
+                </span>
+                    <input type="text" class="form-control" id="tower" placeholder="请输入杆塔名称" value="#15">
+                </div>
+
+                <div class="input-group input-group-sm">
+                <span class="input-group-prepend">
+                  <label class="input-group-text" for="defect">缺陷描述</label>
+                </span>
+                    <input type="text" class="form-control" id="defect" placeholder="请输入缺陷描述">
+                </div>
+
+
+                <div class="input-group input-group-sm">
+
+                    <button type="button" class="btn btn-primary" id="choice"> <span class="fa fa-arrows"></span></button>
+                    &nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" onclick="javascript:$('#image').cropper('clear');"> 清除</button>
+                    &nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" onclick="">保存缺陷</button>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </div>
-
-
-
-
 
 
 <!-- Scripts -->

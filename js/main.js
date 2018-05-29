@@ -29,8 +29,30 @@ $(function () {
     var uploadedImageURL;
 
 
-    // Tooltip
-    $('[data-toggle="tooltip"]').tooltip();
+
+    function moveMode(){
+        $image.cropper('setDragMode', 'move');
+        $("#choice").removeClass("active")
+        $("#choice .fa").removeClass("fa-crop")
+        $("#choice .fa").addClass("fa-arrows")
+
+    }
+
+    function cropMode(){
+        $image.cropper('setDragMode', 'crop');
+        $("#choice").addClass("active")
+        $("#choice .fa").removeClass("fa-arrows")
+        $("#choice .fa").addClass("fa-crop")
+    }
+
+
+    $("#choice").on("click",function (e) {
+        if($("#choice .fa").hasClass("fa-crop")){
+            moveMode()
+        }else{
+            cropMode()
+        }
+    })
 
 
     // Cropper
@@ -46,6 +68,7 @@ $(function () {
         },
         cropend: function (e) {
             console.log(e.type, e.detail.action);
+            moveMode();
         },
         crop: function (e) {
             console.log(e.type);
@@ -56,15 +79,6 @@ $(function () {
     }).cropper(options);
 
 
-    // Buttons
-    if (!$.isFunction(document.createElement('canvas').getContext)) {
-        $('button[data-method="getCroppedCanvas"]').prop('disabled', true);
-    }
-
-    if (typeof document.createElement('cropper').style.transition === 'undefined') {
-        $('button[data-method="rotate"]').prop('disabled', true);
-        $('button[data-method="scale"]').prop('disabled', true);
-    }
 
 
     // Download
@@ -101,24 +115,14 @@ $(function () {
         $image.cropper('destroy').cropper(options);
     });
 
-    $(window).blur(function(){
-        //your code here
-        console.log('window blur');
-        $image.cropper('setDragMode', 'move');
-    });
-    $(window).focus(function(){
-        //your code here
-        console.log('window fouse');
-        $image.cropper('setDragMode', 'move');
-    });
 
     $(document.body).on("keyup", function (e) {
 
         console.log("keyup" + e.which)
         switch (e.which) {
-            case 17:
-                $image.cropper('setDragMode', 'move');
-
+            case 17:        //Ctrl
+                moveMode();
+                break;
 
             default:
                 break;
@@ -156,50 +160,19 @@ $(function () {
                 break;
 
 
-            case 17:
-                $image.cropper('setDragMode', 'crop');
+            case 17:    //Ctrl
+                cropMode();
+                break;
 
+            case 27:    //Esc
+                $image.cropper('clear');
+                break;
 
             default:
                 break;
         }
-
     });
 
-
-    // Import image
-    var $inputImage = $('#inputImage');
-
-    if (URL) {
-        $inputImage.change(function () {
-            var files = this.files;
-            var file;
-
-            if (!$image.data('cropper')) {
-                return;
-            }
-
-            if (files && files.length) {
-                file = files[0];
-
-                if (/^image\/\w+$/.test(file.type)) {
-                    uploadedImageName = file.name;
-                    uploadedImageType = file.type;
-
-                    if (uploadedImageURL) {
-                        URL.revokeObjectURL(uploadedImageURL);
-                    }
-
-                    uploadedImageURL = URL.createObjectURL(file);
-                    $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
-                    $inputImage.val('');
-                } else {
-                    window.alert('Please choose an image file.');
-                }
-            }
-        });
-    } else {
-        $inputImage.prop('disabled', true).parent().addClass('disabled');
-    }
+    // $image.cropper('destroy').attr('src', uploadedImageURL).cropper(options);
 
 });
