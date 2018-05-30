@@ -1837,13 +1837,14 @@
       }
     },
     dblclick: function dblclick(e) {
-
-
-        var canvasData = this.getCanvasData();
-        if(canvasData.width == canvasData.naturalWidth*0.5){
+        var scale = 1;
+        // console.log(this.getCanvasData().width,this.getContainerData().width)
+        if( this.getCanvasData().width >= this.getContainerData().width * 2.5){
             this.resetZoom();
+            console.info("双击：还原","status")
         }else{
-            this.zoomTo(0.5, null,e);
+            this.zoomTo(scale, null,e);
+            console.info("双击：缩放至原图的"+scale+"倍","status")
         }
     },
     wheel: function wheel(e) {

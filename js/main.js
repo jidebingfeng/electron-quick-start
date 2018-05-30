@@ -1,3 +1,11 @@
+
+function clearText(text){
+    if($("#status").data("uid")==text){
+        $("#status").html("")
+        // $("#status").removeClass("alert-warning")
+    }
+}
+
 $(function () {
 
     'use strict';
@@ -6,6 +14,30 @@ $(function () {
         log: function () {
         }
     };
+    console.info_ = console.info;
+    console.info = function(arg,type) {
+        console.info_(...arguments);
+        if("status" == type){
+            $("#status").html(arg)
+            var uid = new Date().getTime()
+            $("#status").data("uid",uid)
+            setTimeout("clearText('"+uid+"')",2000);//2秒，可以改动
+            // $("#status").removeClass("alert-warning")
+        }
+    }
+    console.error_ = console.error;
+    console.error = function(arg,type) {
+        console.error_(...arguments);
+        if("status" == type){
+            $("#status").html(arg)
+            var uid = new Date().getTime()
+            $("#status").data("uid",uid)
+            setTimeout("clearText('"+uid+"')",2000);//2秒，可以改动
+            // $("#status").addClass("alert-warning")
+        }
+    }
+
+
     var URL = window.URL || window.webkitURL;
     var $image = $('#image');
     var $download = $('#download');
@@ -57,12 +89,12 @@ $(function () {
 
     $("#save").on("click",function (e) {
         if(!$image.cropper('getCropBoxData').width){
-            alert("请选择缺陷位置")
+            console.error("请选择缺陷位置","status")
             return;
         }
 
         if(!$("#defect").val()){
-            alert("请输入缺陷描述")
+            console.error("请输入缺陷描述","status")
             return ;
         }
 
@@ -112,6 +144,7 @@ $(function () {
         switch (e.which) {
             case 17:        //Ctrl
                 moveMode();
+                console.info("松开CRTL键：进入浏览模式","status")
                 break;
 
             default:
@@ -152,10 +185,12 @@ $(function () {
 
             case 17:    //Ctrl
                 cropMode();
+                console.info("按下CRTL键：进入选择模式","status")
                 break;
 
             case 27:    //Esc
                 $image.cropper('clear');
+                console.info("点击ESC键：清除选框","status")
                 break;
 
             default:
