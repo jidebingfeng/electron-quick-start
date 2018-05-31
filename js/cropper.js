@@ -3225,6 +3225,27 @@
     },
 
 
+      getMarkedImage: function getMarkedImage(bug) {
+          console.log("Begain getMarkedImage")
+          var canvas = document.createElement('canvas');
+          var context = canvas.getContext('2d');
+
+          canvas.width = image.width;
+          canvas.height = image.height;
+
+          console.log("Begain 画图")
+          var context=canvas.getContext("2d");
+          context.drawImage(image,0,0);
+
+          console.log("Begain 标记")
+          context.ellipse(150, 75, 100, 50, 0, 0, 2*Math.PI, true);
+          context.strokeStyle="red"
+          context.stroke();
+
+          return canvas;
+      },
+
+
     /**
      * Change the aspect ratio of the crop box.
      * @param {number} aspectRatio - The new aspect ratio.

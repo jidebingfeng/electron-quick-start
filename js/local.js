@@ -1,10 +1,11 @@
 const {remote} = require('electron')
-const fs=require('fs');
+const fs = require('fs');
 const path = require('path');
+const url = require('url')
 
 
-function listDir(fileDirectory){
-    if(fs.existsSync(fileDirectory)){
+function listDir(fileDirectory) {
+    if (fs.existsSync(fileDirectory)) {
         fs.readdir(fileDirectory, function (err, files) {
             if (err) {
                 console.log(err);
@@ -14,7 +15,7 @@ function listDir(fileDirectory){
             var count = files.length;
             var results = {};
             files.forEach(function (filename) {
-                console.log(path.join(fileDirectory,filename))
+                console.log(path.join(fileDirectory, filename))
             });
         });
     }
@@ -24,5 +25,14 @@ function listDir(fileDirectory){
 
 }
 
-var fileDirectory = "D:\\拷贝的缺陷数据\\无人机巡视照片\\缺陷统计\\220kV\\州肖线";
-// listDir(fileDirectory)
+function formatUrl(src) {
+    return url.format({
+        protocol: 'file',
+        slashes: true,
+        pathname: src
+    })
+}
+
+function saveDataUrl(dataUrl){
+    remote.getCurrentWindow().loadURL(dataUrl)
+}

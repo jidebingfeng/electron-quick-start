@@ -104,12 +104,25 @@ $(function () {
     })
 
     $("#before").on("click",function (e) {
-        $image.cropper('destroy').attr('src', "img/bug1.jpg").cropper(options);
+        var imgurl = "img/bug1.jpg";
+        $image.cropper('destroy').attr('src', formatUrl(imgurl)).cropper(options);
     })
     $("#next").on("click",function (e) {
-        var imgurl = "D:\\拷贝的缺陷数据\\无人机巡视照片\\缺陷统计\\220kV\\州肖线\\9%23A相(1)挂线金具缺少开口销螺栓松动 - 副本.jpg";
-        $image.cropper('destroy').attr('src', imgurl).cropper(options);
+        var imgurl = "D:\\拷贝的缺陷数据\\无人机巡视照片\\缺陷统计\\220kV\\州肖线\\9#A相(1)挂线金具缺少开口销螺栓松动 - 副本.jpg";
+        $image.cropper('destroy').attr('src', formatUrl(imgurl)).cropper(options);
     })
+
+
+    $("#download").on("click",function (e) {
+        var result = $image.cropper('getMarkedImage')
+        console.log(result)
+        var url = result.toDataURL("image/jpeg");
+        console.log("转换url成功")
+        // window.open(url)
+        saveDataUrl(url)
+        // window.location.href = url
+    })
+
 
 
     // Cropper
