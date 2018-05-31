@@ -18,7 +18,7 @@ let mainWindow
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({zoomToPageWidth: true})
+    mainWindow = new BrowserWindow({width: 1300, height: 700,zoomToPageWidth: true})
     // mainWindow.maximize()
 
 

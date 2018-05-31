@@ -6,6 +6,16 @@ function clearText(text){
     }
 }
 
+
+
+function download(bug){
+    console.log(bug)
+    var result =$('#image').cropper('getMarkedImage',bug)
+    var url = result.toDataURL("image/jpeg");
+    var $a = $("<a href='"+url+"' download='bug.jpg'><label>下载</label></a>")
+    $a.find("label").click()
+}
+
 $(function () {
 
     'use strict';
@@ -88,7 +98,11 @@ $(function () {
 
 
     $("#save").on("click",function (e) {
-        if(!$image.cropper('getCropBoxData').width){
+        var cropBoxData = $image.cropper('getCropBoxData');
+        var canvasData = $image.cropper('getCanvasData');
+        var imageData = $image.cropper('getImageData');
+        console.log(cropBoxData,canvasData,imageData)
+        if(!cropBoxData.width){
             console.error("请选择缺陷位置","status")
             return;
         }
@@ -98,7 +112,14 @@ $(function () {
             return ;
         }
 
-        $("#list").append("<li>"+$("#line").val()+$("#tower").val()+$("#defect").val()+"</li>");
+        var x = cropBoxData.left - canvasData.left + cropBoxData.width/2
+        var y = cropBoxData.top -canvasData.top + cropBoxData.height/2
+        var scale = canvasData.naturalWidth / canvasData.width
+        x = x * scale;
+        y = y * scale;
+        var width =  cropBoxData.width/2 *scale
+        var height =  cropBoxData.height/2 *scale
+        $("#list").append("<a href='javascript:download({x:"+x+",y:"+y+",width:"+width+",height:"+height+"});'><li>"+$("#line").val()+$("#tower").val()+$("#defect").val()+"</li></a>");
         $image.cropper('clear');
         $("#defect").val("")
     })
@@ -112,13 +133,6 @@ $(function () {
         $image.cropper('destroy').attr('src', formatUrl(imgurl)).cropper(options);
     })
 
-
-    $("#download").on("click",function (e) {
-        var result = $image.cropper('getMarkedImage')
-        var url = result.toDataURL("image/jpeg");
-        var $a = $("<a href='"+url+"' download='bug.jpg'><label>下载</label></a>")
-        $a.find("label").click()
-    })
 
 
 

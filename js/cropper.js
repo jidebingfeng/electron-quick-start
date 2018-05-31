@@ -3230,17 +3230,24 @@
           var canvas = document.createElement('canvas');
           var context = canvas.getContext('2d');
 
+          var max = 3500;
           console.log(image.width,image.height)
-          canvas.width = 3000;
-          canvas.height = 2000;
+          var rate = max / Math.max(image.width,image.height)
+          if(rate > 1){
+            rate = 1
+          }
+          canvas.width = image.width*rate;
+          canvas.height = image.height*rate;
+          console.log(canvas.width,canvas.height)
 
           console.log("Begain 画图")
           var context=canvas.getContext("2d");
-          context.drawImage(image,0,0);
+          context.drawImage(image,0,0,canvas.width,canvas.height);
 
           console.log("Begain 标记")
-          context.ellipse(150, 75, 100, 50, 0, 0, 2*Math.PI, true);
+          context.ellipse(bug.x*rate, bug.y*rate, bug.width*rate, bug.height*rate, 0, 0, 2*Math.PI, true);
           context.strokeStyle="red"
+          context.lineWidth = 4
           context.stroke();
 
           return canvas;
