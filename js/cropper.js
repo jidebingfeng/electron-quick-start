@@ -3230,8 +3230,9 @@
           var canvas = document.createElement('canvas');
           var context = canvas.getContext('2d');
 
-          canvas.width = image.width;
-          canvas.height = image.height;
+          console.log(image.width,image.height)
+          canvas.width = 3000;
+          canvas.height = 2000;
 
           console.log("Begain 画图")
           var context=canvas.getContext("2d");
