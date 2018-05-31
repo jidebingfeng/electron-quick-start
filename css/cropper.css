@@ -67,6 +67,8 @@
   outline: 1px solid red;
   overflow: hidden;
   width: 100%;
+  border-radius: 50% 50%;
+  border: 1px solid red;
 }
 
 .cropper-dashed {
