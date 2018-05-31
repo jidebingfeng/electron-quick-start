@@ -119,7 +119,12 @@ $(function () {
         var url = result.toDataURL("image/jpeg");
         console.log("转换url成功")
         // window.open(url)
-        saveDataUrl(url)
+        // saveDataUrl(url)
+        var $a = $("<a href='"+url+"' >下载</a>")
+        $a.trigger('onclick')
+        console.log("eND")
+        $("#list").append($a)
+
         // window.location.href = url
     })
 
